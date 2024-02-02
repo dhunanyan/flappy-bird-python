@@ -1,6 +1,6 @@
 import pygame
 import assets
-import configs
+import config
 
 from layer import Layer
 from objects.floor import Floor
@@ -28,20 +28,22 @@ class Bird(pygame.sprite.Sprite):
   def update(self):
     self.image_index += 1
     self.image_index = self.image_index
-    if self.image_index // configs.BIRD_ANIMATION_SPEED > len(self.images) - 1:
+    if self.image_index // config.BIRD_ANIMATION_SPEED > len(self.images) - 1:
       self.image_index = 0
-    self.image = self.images[self.image_index // configs.BIRD_ANIMATION_SPEED]
+    self.image = self.images[self.image_index // config.BIRD_ANIMATION_SPEED]
     
-    self.flap += configs.GRAVITY
+    self.flap += config.GRAVITY
     self.rect.y += self.flap
     
-    if self.rect.x < configs.BIRD_Y_POSITION:
-      self.rect.x += configs.BIRD_APPEARING_SPEED
+    if self.rect.x < config.BIRD_Y_POSITION:
+      self.rect.x += config.BIRD_APPEARING_SPEED
     
-  def handle_flap_event(self, event):
-    if event.type == pygame.KEYDOWN and event.key == getattr(pygame, configs.FLAP_KEY):
+  def handle_flap_event(self, event, game_over):
+    if event.type == pygame.KEYDOWN and event.key == getattr(pygame, config.FLAP_KEY):
       self.flap = 0
-      self.flap -= configs.BIRD_FLAP_RADIUS
+      self.flap -= config.BIRD_FLAP_RADIUS
+      if not game_over:
+        assets.play_audio('wing')
       
   def check_collision(self, sprites):
     for sprite in sprites:

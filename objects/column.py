@@ -1,6 +1,6 @@
 import pygame
 import assets
-import configs
+import config
 import random
 from layer import Layer
 
@@ -27,9 +27,9 @@ class Column(pygame.sprite.Sprite):
     sprite_floor_height = assets.get_sprite("floor").get_rect().height
     
     min_y = 100
-    max_y = configs.SCREEN_HEIGHT - sprite_floor_height - 100
+    max_y = config.SCREEN_HEIGHT - sprite_floor_height - 100
     
-    self.rect = self.image.get_rect(midleft=(configs.SCREEN_WIDTH, random.uniform(min_y, max_y)))
+    self.rect = self.image.get_rect(midleft=(config.SCREEN_WIDTH, random.uniform(min_y, max_y)))
     
     self.mask = pygame.mask.from_surface(self.image)
     
